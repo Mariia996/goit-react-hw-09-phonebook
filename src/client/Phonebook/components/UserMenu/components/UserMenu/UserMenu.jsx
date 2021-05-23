@@ -1,11 +1,15 @@
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { getUser } from '../../../../../../redux/phonebook/reducer/auth/selectors';
 import { logoutUser } from '../../../../../../redux/phonebook/reducer/auth/operations';
 
 import styles from './UserMenu.module.css';
 
-const UserMenu = ({ user, onLogout }) => {
-    console.log(user);
+const UserMenu = () => {
+    const user = useSelector(getUser);
+    const dispatch = useDispatch();
+    const onLogout = () => dispatch(logoutUser());
+
     return (
         <div className={styles.userContainer}>
             <div className={styles.imgContainer}>
@@ -18,12 +22,4 @@ const UserMenu = ({ user, onLogout }) => {
     );
 }
 
-const mapDispatchToProp = dispatch => {
-    return {
-        onLogout: ()=> {
-            dispatch(logoutUser())
-    }
-    }
-}
-
-export default connect(null, mapDispatchToProp)(UserMenu);
+export default UserMenu;

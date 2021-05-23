@@ -28,9 +28,9 @@ const userReducer = createReducer(initialStateUser, {
   }),
   [actions.currentUserRequest]: (state) => ({ ...state, loading: true }),
   [actions.currentUserSuccess]: (_, { payload }) => ({
-    ...payload.user,
-    loading: false,
-  }),
+      ...payload,
+      loading: false,
+    }),
   [actions.registerError]: (state) => ({ ...state, loading: false }),
   [actions.loginError]: (state) => ({ ...state, loading: false }),
   [actions.logoutRequest]: (state) => ({ ...state, loading: true }),

@@ -1,6 +1,6 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux'
 
 import { getCurrentUser } from '../../../redux/phonebook/reducer/auth/operations';
 import { routes } from './routes';
@@ -16,11 +16,12 @@ const PublicRoute = lazy(() => import('../../components/PublicRoute' /* webpackC
 const LoginPage = lazy(() => import('../../../client/Phonebook/pages/LoginPage/Login' /* webpackChunkName: "LoginPage" */));
 const NotFoundPage = lazy(() => import('../../pages/NotFoundPage' /* webpackChunkName: "NotFoundPage" */));
 
-const App = ({ onGetCurrentUser }) => {
+const App = () => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onGetCurrentUser();
-  }, []);
+    dispatch(getCurrentUser());
+  }, [dispatch]);
 
   const { home, phonebook, register, login } = routes;
   return (
@@ -39,9 +40,4 @@ const App = ({ onGetCurrentUser }) => {
     )
 }
 
-const mapDispatchToProp = dispatch => ({
-  onGetCurrentUser: () => dispatch(getCurrentUser()),
-  })
-
-
-export default connect(null, mapDispatchToProp)(App);
+export default App;

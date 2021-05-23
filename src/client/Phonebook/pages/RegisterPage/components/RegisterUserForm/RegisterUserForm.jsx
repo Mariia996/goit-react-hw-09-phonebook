@@ -1,15 +1,18 @@
 import { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import {registerUser} from '../../../../../../redux/phonebook/reducer/auth/operations';
 
 import styles from './RegisterUserForm.module.css';
 
-const RegisterUserForm = ({ onSubmit }) => {
+const RegisterUserForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const onSubmit = (body) => dispatch(registerUser(body));
 
     const nameInputId = uuidv4();
     const emailInputId = uuidv4();
@@ -71,10 +74,10 @@ const RegisterUserForm = ({ onSubmit }) => {
     )
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onSubmit:(body) => dispatch(registerUser(body))
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         onSubmit:(body) => dispatch(registerUser(body))
+//     }
+// }
 
-export default connect(null, mapDispatchToProps)(RegisterUserForm);
+export default RegisterUserForm;

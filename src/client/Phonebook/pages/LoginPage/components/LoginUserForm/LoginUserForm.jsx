@@ -1,15 +1,23 @@
 import { useState } from 'react';
 
-import { connect } from 'react-redux';
+import useForm from '../../../../../../shared/hooks/useForm';
+import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { loginUser } from '../../../../../../redux/phonebook/reducer/auth/operations';
 
 import styles from './LoginUserForm.module.css';
 
-const LoginUserForm = ({onSubmit}) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const initialState = {
+    email: '',
+    password: ''
+}
+
+const LoginUserForm = () => {
+
+
+    const dispatch = useDispatch();
+    const onSubmit = (value) => dispatch(loginUser(value));
 
     const emailInputId = uuidv4();
     const passwordInputId = uuidv4();
@@ -58,11 +66,5 @@ const LoginUserForm = ({onSubmit}) => {
     )
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onSubmit: (value) => dispatch(loginUser(value))
-    }
-}
-
-export default connect(null, mapDispatchToProps)(LoginUserForm);
+export default LoginUserForm;
 
